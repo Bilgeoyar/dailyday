@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6657d9">
+  <meta name="description" content="Karakterini, becerilerini ve kişisel şehrini gerçek hayattaki çalışmalarınla geliştir.">
+  <title>LifeQuest — Gerçek Hayat RPG'si</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="auth-config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <main id="lockScreen" class="lock-screen">
+    <section class="login-card" aria-labelledby="loginTitle">
+      <div class="brand-mark" aria-hidden="true">LQ</div>
+      <p class="eyebrow">KİŞİSEL GELİŞİM OYUNU</p>
+      <h1 id="loginTitle">LifeQuest'e giriş</h1>
+      <p class="muted">Şehrin, karakterin ve kayıtların bu tarayıcıda şifreli olarak saklanır.</p>
+      <form id="loginForm" class="login-form">
+        <label for="password">Parola</label>
+        <div class="password-row">
+          <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required autofocus>
+          <button id="togglePassword" type="button" class="icon-button" aria-label="Parolayı göster">Göster</button>
+        </div>
+        <button id="loginButton" class="primary-button" type="submit">Giriş yap</button>
+        <p id="loginError" class="form-error" role="alert"></p>
+      </form>
+      <details class="security-note">
+        <summary>Güvenlik notu</summary>
+        <p>GitHub Pages yalnızca statik dosya sunar. Bu giriş ekranı ziyaretçileri engeller ve yerel kayıtları şifreler; sunucu tarafı üyelik sistemi değildir.</p>
+      </details>
+    </section>
+  </main>
+
+  <div id="appShell" class="app-shell" hidden>
+    <aside class="sidebar">
+      <a class="logo" href="#dashboard" aria-label="LifeQuest ana sayfa">
+        <span class="logo-icon">LQ</span>
+        <span>LifeQuest</span>
+      </a>
+      <nav class="main-nav" aria-label="Ana menü">
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Ana ekran</button>
+        <button class="nav-item" data-view="tasks"><span>✓</span> Görevler</button>
+        <button class="nav-item" data-view="focus"><span>◷</span> Odak alanı</button>
+        <button class="nav-item" data-view="skills"><span>✦</span> Beceriler</button>
+        <button class="nav-item" data-view="town"><span>▦</span> Şehrim</button>
+        <button class="nav-item" data-view="profile"><span>☺</span> Profil ve veri</button>
+      </nav>
+      <div class="sidebar-footer">
+        <p>Oturum, <strong id="lockMinutes">20</strong> dakika hareketsizlikte kilitlenir.</p>
+        <button id="logoutButton" class="ghost-button full-width">Kilitle ve çık</button>
+      </div>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <button id="menuButton" class="icon-button mobile-only" aria-label="Menüyü aç">☰</button>
+        <div>
+          <p class="eyebrow" id="pageEyebrow">BUGÜNÜN MERKEZİ</p>
+          <h2 id="pageTitle">Ana ekran</h2>
+        </div>
+        <div class="topbar-profile">
+          <div class="coin-pill"><span>◆</span><strong id="topCoins">0</strong></div>
+          <div id="topAvatar" class="mini-avatar" aria-hidden="true">🧭</div>
+          <div class="profile-copy desktop-only">
+            <strong id="topName">Gezgin</strong>
+            <span id="topLevel">Seviye 1</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+        <section id="view-dashboard" class="view active-view">
+          <div class="hero-grid">
+            <article class="hero-card">
+              <div>
+                <p class="eyebrow light">KARAKTERİN</p>
+                <h3><span id="heroName">Gezgin</span>, sıradaki seviyeye hazırlan.</h3>
+                <p id="heroMessage">Küçük bir görev tamamlayarak şehrine ilk kaynağı kazandır.</p>
+                <div class="level-track" aria-label="Seviye ilerlemesi">
+                  <div id="heroXpBar" class="level-fill"></div>
+                </div>
+                <p class="small"><strong id="heroXp">0</strong> / <span id="heroXpTarget">100</span> XP</p>
+              </div>
+              <div id="heroAvatar" class="hero-avatar" aria-hidden="true">🧭</div>
+            </article>
+
+            <article class="daily-card">
+              <p class="eyebrow">GÜNLÜK DURUM</p>
+              <div class="daily-score"><strong id="dailyScore">0</strong><span>puan</span></div>
+              <p id="dailySummary" class="muted">Bugün henüz etkinlik yok.</p>
+              <button class="secondary-button" data-jump="tasks">İlk görevi tamamla</button>
+            </article>
+          </div>
+
+          <div class="stat-grid">
+            <article class="stat-card"><span class="stat-icon">✓</span><div><strong id="statTasks">0</strong><span>Tamamlanan görev</span></div></article>
+            <article class="stat-card"><span class="stat-icon">◷</span><div><strong id="statFocus">0 dk</strong><span>Toplam odak</span></div></article>
+            <article class="stat-card"><span class="stat-icon">✦</span><div><strong id="statSkills">0</strong><span>Beceri seviyesi</span></div></article>
+            <article class="stat-card"><span class="stat-icon">▦</span><div><strong id="statTown">3</strong><span>Şehir seviyesi</span></div></article>
+          </div>
+
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-heading">
+                <div><p class="eyebrow">HIZLI GÖREVLER</p><h3>Bugün ne yapacaksın?</h3></div>
+                <button class="text-button" data-jump="tasks">Tümünü gör</button>
+              </div>
+              <div id="dashboardTasks" class="compact-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-heading"><div><p class="eyebrow">ŞEHİR NABZI</p><h3>Gelişen yapılar</h3></div></div>
+              <div id="dashboardTown" class="town-mini-grid"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-tasks" class="view">
+          <div class="page-grid tasks-layout">
+            <article class="panel form-panel">
+              <p class="eyebrow">YENİ GÖREV</p>
+              <h3>Gerçek hayattaki adımını ekle</h3>
+              <form id="taskForm" class="stack-form">
+                <label for="taskTitle">Görev adı</label>
+                <input id="taskTitle" maxlength="80" placeholder="Örn. 30 dakika İngilizce çalış" required>
+                <label for="taskCategory">Alan</label>
+                <select id="taskCategory">
+                  <option value="learning">Öğrenme</option>
+                  <option value="focus">İş ve odak</option>
+                  <option value="health">Sağlık</option>
+                  <option value="social">Sosyal yaşam</option>
+                </select>
+                <label for="taskDifficulty">Zorluk</label>
+                <select id="taskDifficulty">
+                  <option value="easy">Kolay — 10 XP</option>
+                  <option value="medium" selected>Orta — 20 XP</option>
+                  <option value="hard">Zor — 35 XP</option>
+                </select>
+                <button class="primary-button" type="submit">Görevi ekle</button>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-heading">
+                <div><p class="eyebrow">GÖREV PANOSU</p><h3>Aktif görevler</h3></div>
+                <span id="taskCount" class="badge">0 görev</span>
+              </div>
+              <div id="taskList" class="task-list"></div>
+              <div class="panel-heading history-heading">
+                <div><p class="eyebrow">SON KAYITLAR</p><h3>Tamamlananlar</h3></div>
+              </div>
+              <div id="completedTaskList" class="compact-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-focus" class="view">
+          <div class="focus-layout">
+            <article class="timer-card">
+              <p class="eyebrow light">FOCUSWORLD</p>
+              <h3>Sessiz çalışma odası</h3>
+              <p class="timer-room">📚 Sanal Kütüphane · <span id="roomStatus">Hazır</span></p>
+              <div id="timerDisplay" class="timer-display" aria-live="polite">25:00</div>
+              <div class="timer-presets" aria-label="Süre seçimi">
+                <button class="timer-chip active" data-minutes="25">25 dk</button>
+                <button class="timer-chip" data-minutes="50">50 dk</button>
+                <button class="timer-chip" data-minutes="90">90 dk</button>
+              </div>
+              <div class="timer-actions">
+                <button id="timerStart" class="light-button">Başlat</button>
+                <button id="timerPause" class="outline-light-button" disabled>Duraklat</button>
+                <button id="timerReset" class="outline-light-button">Sıfırla</button>
+              </div>
+            </article>
+            <article class="panel focus-side">
+              <p class="eyebrow">ODAK RAPORU</p>
+              <h3>Çalışma birikimin</h3>
+              <div class="focus-number"><strong id="focusTotal">0</strong><span>dakika</span></div>
+              <div class="metric-row"><span>Oturum sayısı</span><strong id="focusSessions">0</strong></div>
+              <div class="metric-row"><span>Bugünkü süre</span><strong id="focusToday">0 dk</strong></div>
+              <div class="metric-row"><span>Son ödül</span><strong id="focusReward">—</strong></div>
+              <div class="focus-tip">Her tamamlanan odak oturumu “Odak Ustalığı” becerisine puan ve karakterine altın kazandırır.</div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-skills" class="view">
+          <div class="section-intro">
+            <div><p class="eyebrow">SKILLHERO</p><h3>Gerçek beceriler, görünür ilerleme</h3></div>
+            <p>Görevlerini tamamladıkça ilgili beceri otomatik gelişir.</p>
+          </div>
+          <div id="skillGrid" class="skill-grid"></div>
+        </section>
+
+        <section id="view-town" class="view">
+          <div class="section-intro">
+            <div><p class="eyebrow">LIFETOWN</p><h3>Kişisel şehrini kur</h3></div>
+            <p>Görevlerden kazandığın altınla yapıları yükselt.</p>
+          </div>
+          <div id="townGrid" class="town-grid"></div>
+        </section>
+
+        <section id="view-profile" class="view">
+          <div class="page-grid profile-layout">
+            <article class="panel">
+              <p class="eyebrow">KARAKTER</p>
+              <h3>Görünümünü düzenle</h3>
+              <form id="profileForm" class="stack-form">
+                <label for="profileName">Karakter adı</label>
+                <input id="profileName" maxlength="24" required>
+                <fieldset>
+                  <legend>Avatar</legend>
+                  <div id="avatarOptions" class="avatar-options"></div>
+                </fieldset>
+                <button class="primary-button" type="submit">Profili kaydet</button>
+              </form>
+            </article>
+            <article class="panel">
+              <p class="eyebrow">ŞİFRELİ VERİ</p>
+              <h3>Yedekleme ve sıfırlama</h3>
+              <p class="muted">Yedek dosyası şifreli uygulama kaydını içerir. Aynı parola yapılandırmasıyla geri yüklenebilir.</p>
+              <div class="data-actions">
+                <button id="exportButton" class="secondary-button">Şifreli yedeği indir</button>
+                <label class="secondary-button file-button">Yedeği içe aktar<input id="importInput" type="file" accept="application/json" hidden></label>
+                <button id="resetButton" class="danger-button">Tüm verileri sil</button>
+              </div>
+              <div class="security-box">
+                <strong>Bu sürümde veri nerede?</strong>
+                <p>Bu cihazın tarayıcısında. Sunucuya gönderilmez ve farklı cihazlar arasında eşitlenmez.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <noscript>Bu uygulama JavaScript gerektirir.</noscript>
+</body>
+</html>
