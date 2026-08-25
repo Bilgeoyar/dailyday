@@ -395,3 +395,23 @@ fieldset { margin: 10px 0; padding: 0; border: 0; }
 
 @media(max-width:980px){.experience-body{grid-template-columns:1fr}.experience-header{flex-direction:column}.experience-header-actions{justify-content:flex-start}.experience-scene,.experience-scene-inner{min-height:460px}}
 @media(max-width:640px){.experience-body{padding:0 14px 14px}.experience-header{padding:18px 14px 8px}.experience-scene,.experience-scene-inner{min-height:380px}.experience-note{min-height:100px}.world-building-label{min-width:88px;font-size:.66rem}}
+
+/* LifeQuest Worlds v4 — continuous animated flow */
+.flow-scene { min-height: 590px; background: #050714; }
+.experience-canvas { display:block; width:100%; height:590px; min-height:590px; touch-action:none; cursor:crosshair; }
+.flow-video-badge { position:absolute; top:14px; left:14px; z-index:5; padding:7px 11px; border-radius:999px; color:#fff; background:rgba(12,13,28,.66); border:1px solid rgba(255,255,255,.24); backdrop-filter:blur(8px); font-size:.7rem; font-weight:900; letter-spacing:.12em; }
+.flow-video-badge::before { content:""; display:inline-block; width:8px; height:8px; margin-right:7px; border-radius:50%; background:#ff586c; box-shadow:0 0 10px rgba(255,88,108,.8); animation:livePulse 1.25s ease-in-out infinite; }
+.flow-hint { position:absolute; left:50%; bottom:14px; z-index:5; transform:translateX(-50%); padding:8px 12px; border-radius:999px; color:#fff; background:rgba(12,13,28,.62); backdrop-filter:blur(7px); font-size:.72rem; font-weight:700; white-space:nowrap; pointer-events:none; }
+.flow-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0; }
+.flow-stats span { display:flex; flex-direction:column; gap:2px; padding:11px; border-radius:14px; background:#f0edff; color:#615a78; font-size:.72rem; }
+.flow-stats strong { color:#342a68; font-size:1.2rem; }
+.flow-controls { display:grid; grid-template-columns:repeat(3,52px); grid-template-rows:repeat(2,48px); justify-content:center; gap:6px; margin:14px 0 16px; user-select:none; }
+.flow-controls button { border:0; border-radius:14px; background:#ece8ff; color:#4c3ca8; font-size:1.1rem; font-weight:900; box-shadow:inset 0 0 0 1px rgba(91,75,183,.12); touch-action:none; }
+.flow-controls button:hover,.flow-controls button.pressed { background:#6657d9; color:#fff; transform:translateY(-1px); }
+.flow-controls [data-flow-dir="up"] { grid-column:2; grid-row:1; }
+.flow-controls [data-flow-dir="left"] { grid-column:1; grid-row:2; }
+.flow-controls [data-flow-dir="down"] { grid-column:2; grid-row:2; }
+.flow-controls [data-flow-dir="right"] { grid-column:3; grid-row:2; }
+@keyframes livePulse { 50% { opacity:.35; transform:scale(.75); } }
+@media(max-width:980px){.flow-scene,.experience-canvas{height:500px;min-height:500px}}
+@media(max-width:640px){.flow-scene,.experience-canvas{height:420px;min-height:420px}.flow-hint{max-width:86%;overflow:hidden;text-overflow:ellipsis}.flow-controls{display:grid}}

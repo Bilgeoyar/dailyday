@@ -567,9 +567,13 @@
     appState = null;
     clearTimeout(inactivityTimer);
     stopAmbient();
+    window.LifeQuestFlow?.stop();
     document.removeEventListener('pointerdown', resetInactivityTimer);
     document.removeEventListener('keydown', resetInactivityTimer);
     $('#appShell').hidden = true;
+    $('#experienceModal').hidden = true;
+    $('#worldModal').hidden = true;
+    document.body.classList.remove('modal-open');
     $('#lockScreen').hidden = false;
     $('#password').focus();
     if (message) $('#loginError').textContent = message;
@@ -822,23 +826,46 @@
     const scene = getScene(appState.selectedPersona, buildingId);
     const index = ['library', 'studio', 'garden'].indexOf(buildingId);
     currentExperienceScene = { personaId: appState.selectedPersona, buildingId };
-    $('#experienceEyebrow').textContent = `${persona.name.toUpperCase()} · MİNİ DÜNYA`;
+    $('#experienceEyebrow').textContent = `${persona.name.toUpperCase()} · AKIŞ DÜNYASI`;
     $('#experienceTitle').textContent = persona.buildings[index];
     $('#experienceSubtitle').textContent = scene?.intro || '';
-    $('#experienceInstructions').textContent = scene?.instructions || 'Sahnedeki nesnelere dokun.';
+    $('#experienceInstructions').textContent = 'Yön tuşları veya WASD ile uç. Telefonda sahneye dokun ya da okları kullan. Parlayan nesneleri topla.';
     $('#experienceActionButton').dataset.modalBuilding = buildingId;
     $('#experienceActionButton').textContent = scene?.actionLabel || 'Bu alanı kullan';
-    $('#experienceScene').className = `experience-scene theme-${appState.selectedPersona} mode-${scene?.mode || 'default'}`;
-    $('#experienceScene').innerHTML = renderSceneMarkup(appState.selectedPersona, buildingId);
-    $('#experienceNote').textContent = 'Bir nesneye tıklayınca burada not görünecek.';
+    $('#experienceScene').className = `experience-scene flow-scene theme-${appState.selectedPersona} mode-${scene?.mode || 'default'}`;
+    $('#experienceScene').innerHTML = '<canvas id="experienceCanvas" class="experience-canvas" aria-label="Hareketli dünya sahnesi"></canvas><div class="flow-video-badge">CANLI AKIŞ</div><div class="flow-hint">Yön tuşları · WASD · Dokun ve sürükle</div>';
+    $('#experienceNote').textContent = 'Uçarken parlayan nesneleri topla. Her biri sana bilgi veya motivasyon notu verir.';
+    $('#flowDistance').textContent = '0';
+    $('#flowCollected').textContent = '0';
+    $('#flowPauseButton').textContent = 'Akışı duraklat';
     $('#experienceModal').hidden = false;
     document.body.classList.add('modal-open');
     updateAmbientButton();
     startAmbient(scene?.ambient);
+    requestAnimationFrame(() => {
+      const canvas = $('#experienceCanvas');
+      if (!canvas || !window.LifeQuestFlow) return;
+      window.LifeQuestFlow.start({
+        canvas,
+        scene,
+        avatar: appState.profile.avatar,
+        onCollect(note, count) {
+          $('#experienceNote').textContent = note;
+          $('#flowCollected').textContent = String(count);
+          chirpBird(820 + Math.random() * 220);
+        },
+        onStats(stats) {
+          $('#flowDistance').textContent = String(stats.distance);
+          $('#flowCollected').textContent = String(stats.collected);
+          $('#flowPauseButton').textContent = stats.paused ? 'Akışı sürdür' : 'Akışı duraklat';
+        }
+      });
+    });
   }
 
   function closeExperienceWorld() {
     currentExperienceScene = null;
+    window.LifeQuestFlow?.stop();
     $('#experienceModal').hidden = true;
     document.body.classList.remove('modal-open');
     stopAmbient();
@@ -1070,6 +1097,27 @@
       const scene = currentExperienceScene ? getScene(currentExperienceScene.personaId, currentExperienceScene.buildingId) : null;
       if (ambient.enabled) startAmbient(scene?.ambient);
       else stopAmbient();
+    });
+    $('#flowPauseButton').addEventListener('click', () => {
+      const paused = window.LifeQuestFlow?.togglePause();
+      $('#flowPauseButton').textContent = paused ? 'Akışı sürdür' : 'Akışı duraklat';
+    });
+    $$('[data-flow-dir]').forEach(button => {
+      const direction = button.dataset.flowDir;
+      const start = event => {
+        event.preventDefault();
+        window.LifeQuestFlow?.setDirection(direction, true);
+        button.classList.add('pressed');
+      };
+      const stop = event => {
+        event.preventDefault();
+        window.LifeQuestFlow?.setDirection(direction, false);
+        button.classList.remove('pressed');
+      };
+      button.addEventListener('pointerdown', start);
+      button.addEventListener('pointerup', stop);
+      button.addEventListener('pointercancel', stop);
+      button.addEventListener('pointerleave', stop);
     });
 
     document.addEventListener('pointerover', event => {

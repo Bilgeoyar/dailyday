@@ -15,6 +15,10 @@ LifeTown, FocusWorld ve SkillHero fikirlerini birleştiren, GitHub Pages üzerin
 - Şifreli yedek dışa aktarma ve geri yükleme
 - Çevrimdışı çalışma ve PWA desteği
 - Mobil uyumlu arayüz
+- Canvas üzerinde gerçek zamanlı kayan mini dünyalar
+- Yön tuşu, WASD, dokunma ve sürüklemeyle uçan karakter
+- Toplanabilir motivasyon ve bilgi nesneleri
+- Dünyaya göre değişen hareketli arka planlar
 
 ## İlk giriş
 
@@ -64,7 +68,8 @@ Fakat depo herkese açıksa kaynak dosyaları indirilebilir ve parola doğrulama
 
 - `index.html`: Uygulama arayüzü
 - `styles.css`: Tasarım ve mobil uyumluluk
-- `app.js`: Uygulama, şifreleme ve oyun mantığı
+- `app.js`: Uygulama, şifreleme ve ana oyun mantığı
+- `world-engine.js`: Sürekli akan Canvas dünyaları ve uçuş kontrolleri
 - `auth-config.js`: Parola doğrulama yapılandırması
 - `tools/password-generator.html`: Yeni parola yapılandırması üretme aracı
 - `manifest.webmanifest`, `sw.js`, `icon.svg`: PWA/çevrimdışı destek

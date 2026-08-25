@@ -10,6 +10,7 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <script src="auth-config.js" defer></script>
+  <script src="world-engine.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -305,8 +306,19 @@
         <aside class="experience-sidebar">
           <p class="eyebrow">ETKİLEŞİM</p>
           <h4>İpuçlarını topla</h4>
-          <p id="experienceInstructions" class="muted">Sahnedeki nesnelere dokun.</p>
-          <div id="experienceNote" class="experience-note">Bir nesneye tıklayınca burada bilgi veya motivasyon notu görünecek.</div>
+          <p id="experienceInstructions" class="muted">Yön tuşlarıyla veya sahneye dokunarak uç.</p>
+          <div class="flow-stats">
+            <span>Mesafe <strong id="flowDistance">0</strong></span>
+            <span>Toplanan <strong id="flowCollected">0</strong></span>
+          </div>
+          <button id="flowPauseButton" class="secondary-button full-width" type="button">Akışı duraklat</button>
+          <div class="flow-controls" aria-label="Hareket kontrolleri">
+            <button type="button" data-flow-dir="up" aria-label="Yukarı">▲</button>
+            <button type="button" data-flow-dir="left" aria-label="Sola">◀</button>
+            <button type="button" data-flow-dir="down" aria-label="Aşağı">▼</button>
+            <button type="button" data-flow-dir="right" aria-label="Sağa">▶</button>
+          </div>
+          <div id="experienceNote" class="experience-note">Uçarken parlayan nesneleri topla. Her biri sana bilgi veya motivasyon notu verir.</div>
         </aside>
       </div>
     </div>

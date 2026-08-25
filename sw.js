@@ -1,5 +1,5 @@
-const CACHE_NAME = 'lifequest-v3-worlds';
-const ASSETS = ['./', './index.html', './styles.css', './app.js', './auth-config.js', './manifest.webmanifest', './icon.svg'];
+const CACHE_NAME = 'lifequest-v4-flow-worlds';
+const ASSETS = ['./', './index.html', './styles.css', './app.js', './world-engine.js', './auth-config.js', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
