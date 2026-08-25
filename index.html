@@ -216,7 +216,7 @@
               <button class="world-building building-center" data-world-building="studio" aria-label="Merkez yapıya gir"></button>
               <button class="world-building building-right" data-world-building="garden" aria-label="Sağ yapıya gir"></button>
               <div id="worldCharacter" class="world-character">🧭</div>
-              <div class="world-path"></div>
+              <div id="worldPath" class="world-path"></div>
             </div>
             <div class="world-hud">
               <div>
@@ -285,6 +285,33 @@
       </div>
     </div>
   </div>
+
+  <div id="experienceModal" class="experience-modal" hidden>
+    <div class="experience-card" role="dialog" aria-modal="true" aria-labelledby="experienceTitle">
+      <button id="closeExperienceModal" class="world-modal-close" aria-label="Dünyayı kapat">×</button>
+      <div class="experience-header">
+        <div>
+          <p id="experienceEyebrow" class="eyebrow">MİNİ DÜNYA</p>
+          <h3 id="experienceTitle">Yıldız Akademisi</h3>
+          <p id="experienceSubtitle" class="muted"></p>
+        </div>
+        <div class="experience-header-actions">
+          <button id="ambientToggle" class="secondary-button">Ses: Açık</button>
+          <button id="experienceActionButton" class="primary-button">Bu alanı kullan</button>
+        </div>
+      </div>
+      <div class="experience-body">
+        <div id="experienceScene" class="experience-scene"></div>
+        <aside class="experience-sidebar">
+          <p class="eyebrow">ETKİLEŞİM</p>
+          <h4>İpuçlarını topla</h4>
+          <p id="experienceInstructions" class="muted">Sahnedeki nesnelere dokun.</p>
+          <div id="experienceNote" class="experience-note">Bir nesneye tıklayınca burada bilgi veya motivasyon notu görünecek.</div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
 
   <noscript>Bu uygulama JavaScript gerektirir.</noscript>
 </body>

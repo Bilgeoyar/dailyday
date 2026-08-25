@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lifequest-v2-worlds';
+const CACHE_NAME = 'lifequest-v3-worlds';
 const ASSETS = ['./', './index.html', './styles.css', './app.js', './auth-config.js', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', event => {

@@ -69,8 +69,161 @@
     }
   };
 
+  const worldScenes = {
+    sage: {
+      library: {
+        mode: 'archive',
+        intro: 'Büyük Arşivde kitap kuleleri arasında dolaş, raflardaki notları aç.',
+        instructions: 'Parlayan raflara ve parşömenlere dokun.',
+        actionLabel: 'Becerilere git',
+        notes: [
+          'Bir fikri yazmak, onu zihninde iki kez işlemektir.',
+          'Küçük ama düzenli tekrar, aralıklı tekrarın temelidir.',
+          'Anlamadan ezberleme kısa sürer; anlamlandırma kalıcıdır.',
+          'Zor konuları sabahın ilk odaklı saatlerinde çalışmak daha etkilidir.'
+        ]
+      },
+      studio: {
+        mode: 'space',
+        intro: 'Yıldız Akademisinde bir astronot olarak boşlukta ilerle, yıldızlardan moral topla.',
+        instructions: 'Yıldızlara dokun; her biri sana kısa bir motivasyon cümlesi verecek.',
+        actionLabel: 'Odak alanına git',
+        notes: [
+          'Bir adım yetmez sanırsın; ama her seferinde yönü değiştirir.',
+          'Mükemmel olmak gerekmiyor, bugün devam etmek gerekiyor.',
+          'Odak, zamana değil niyete tutununca güçlenir.',
+          'Yavaş ilerlemek durmak değildir.',
+          'Bitirdiğin her küçük iş, zihninde yer açar.'
+        ]
+      },
+      garden: {
+        mode: 'libraryGarden',
+        intro: 'Bilgelik Bahçesinde dev kütüphanenin önünde dolaş, ağaçlar ve çiçeklerde saklı bilgi notlarını bul.',
+        instructions: 'Ağaçlara, çiçeklere ve taşlara dokun. Baykuşlar ve atlar etrafta dolaşır.',
+        actionLabel: 'Görevlere git',
+        ambient: 'birds',
+        notes: [
+          'Baykuş notu: Uykusunu iyi alan beyin yeni bilgileri daha iyi işler.',
+          'Bahçe notu: Not alırken kendi cümleni kurmak hatırlamayı güçlendirir.',
+          'Çiçek notu: Öğrenilen bir bilgiyi bir başkasına anlatmak etkin tekrar sayılır.',
+          'Ağaç notu: Kısa yürüyüşler dikkat yenilenmesine yardım eder.',
+          'Kütüphane notu: Sessiz bir ortam, bilişsel yükü azaltır.'
+        ]
+      }
+    },
+    explorer: {
+      library: {
+        mode: 'harbor',
+        intro: 'Keşif Limanında rıhtım boyunca ilerle, pusulaları ve bavulları aç.',
+        instructions: 'İskele, bavul ve pusulalara dokun.',
+        actionLabel: 'Becerilere git',
+        notes: [
+          'Kaşif sözü: Yeni bir yer, yeni bir soru doğurur.',
+          'Harita notu: Büyük hedefi küçük rotalara ayırmak kaygıyı azaltır.',
+          'Rıhtım notu: Hazırlık, cesaretin sessiz yarısıdır.'
+        ]
+      },
+      studio: {
+        mode: 'mapTower',
+        intro: 'Harita Kulesinde dönen haritalar ve yıldız pusulaları arasında görev planla.',
+        instructions: 'Harita parçalarını ve işaret kulelerini tıkla.',
+        actionLabel: 'Odak alanına git',
+        notes: [
+          'Yol notu: Başlamanın en kolay yolu, ilk 5 dakikayı taahhüt etmektir.',
+          'Pusula notu: Her gün tek bir öncelik seçmek dağınıklığı azaltır.',
+          'Rota notu: İlerlemeni görmek motivasyonu artırır.'
+        ]
+      },
+      garden: {
+        mode: 'campValley',
+        intro: 'Vadi Kampında ateş çevresinde dur, çadırları ve doğa işaretlerini incele.',
+        instructions: 'Kamp objelerine dokun.',
+        actionLabel: 'Görevlere git',
+        ambient: 'birds',
+        notes: [
+          'Kamp notu: Doğayla temas, zihinsel yorgunluğu azaltabilir.',
+          'Ateş notu: Bir gün aksasa da ertesi gün yeniden başlamak seriyi kurtarır.',
+          'Vadi notu: Merak duygusu, öğrenmenin itici gücüdür.'
+        ]
+      }
+    },
+    architect: {
+      library: {
+        mode: 'designPalace',
+        intro: 'Tasarım Sarayında plan ruloları ve çizim masaları seni bekliyor.',
+        instructions: 'Planlara ve cetvellere dokun.',
+        actionLabel: 'Becerilere git',
+        notes: ['Mimar notu: İyi yapı, iyi planla başlar.', 'Çizim notu: Karmaşık işleri süreçlere bölmek başarıyı artırır.', 'Ölçü notu: Ölçemediğin şeyi geliştiremezsin.']
+      },
+      studio: {
+        mode: 'masterWorkshop',
+        intro: 'Usta Atölyesinde çarklar, araçlar ve proje masaları çalışıyor.',
+        instructions: 'Takımlara ve çarklara dokun.',
+        actionLabel: 'Odak alanına git',
+        notes: ['Atölye notu: Taslak kusurlu olabilir; kusur, üretimin doğal parçasıdır.', 'Araç notu: Doğru araç zaman kazandırır.', 'Çark notu: Rutin, üretimin görünmez motorudur.']
+      },
+      garden: {
+        mode: 'crystalSquare',
+        intro: 'Kristal Meydanda parıldayan sütunlar ve taş bahçeleri arasında dolaş.',
+        instructions: 'Kristallere ve heykellere dokun.',
+        actionLabel: 'Görevlere git',
+        notes: ['Kristal notu: Düzenli çevre, zihinsel karmaşayı azaltır.', 'Meydan notu: Görsel ilerleme tabloları motivasyonu yükseltir.', 'Taş bahçe notu: Az ama sağlam yapı uzun ömürlüdür.']
+      }
+    },
+    focusmaster: {
+      library: {
+        mode: 'timeTower',
+        intro: 'Zaman Kulesinde asılı saatlerin altında ritmini kur.',
+        instructions: 'Saatlere ve kum saatlerine dokun.',
+        actionLabel: 'Becerilere git',
+        notes: ['Saat notu: Çalışmaya başlamadan önce dikkat dağıtıcıları kapat.', 'Kule notu: 25 dakikalık odak çoğu iş için yeterli bir başlangıçtır.', 'Kum saati notu: Ara vermek, odak süresini uzatır.']
+      },
+      studio: {
+        mode: 'silentHall',
+        intro: 'Sessiz Salonda loş ışıklar eşliğinde tek bir hedefe odaklan.',
+        instructions: 'Masa lambalarına ve not kartlarına dokun.',
+        actionLabel: 'Odak alanına git',
+        notes: ['Salon notu: Aynı anda tek bir iş yapmak hata oranını düşürür.', 'Işık notu: Net bir çalışma alanı başlama direncini azaltır.', 'Kart notu: Bir sonraki adımı yazmak ertelemeyi azaltır.']
+      },
+      garden: {
+        mode: 'thoughtCourtyard',
+        intro: 'Düşünce Avlusunda taş yollar ve su halkaları arasında sakinleş.',
+        instructions: 'Su halkalarına ve taşlara dokun.',
+        actionLabel: 'Görevlere git',
+        notes: ['Avlu notu: Nefesi yavaşlatmak dikkat toparlanmasına yardım eder.', 'Taş notu: Azalan zihinsel gürültü, karar vermeyi kolaylaştırır.', 'Su notu: Kısa farkındalık egzersizi odak kalitesini artırabilir.']
+      }
+    },
+    envoy: {
+      library: {
+        mode: 'communityHouse',
+        intro: 'Topluluk Evinde mektuplar, pano ve yardım notları seni bekliyor.',
+        instructions: 'Mektuplara ve ilan panosuna dokun.',
+        actionLabel: 'Becerilere git',
+        notes: ['Not: Destek istemek zayıflık değil, beceridir.', 'Pano notu: Ortak hedefler bağlılığı artırır.', 'Mektup notu: Teşekkür etmek ilişkileri güçlendirir.']
+      },
+      studio: {
+        mode: 'storyStage',
+        intro: 'Hikâye Sahnesinde ışıklar altında düşüncelerini görünür kıl.',
+        instructions: 'Sahne objelerine ve afişlere dokun.',
+        actionLabel: 'Odak alanına git',
+        notes: ['Sahne notu: Kısa ve açık anlatım daha etkilidir.', 'Perde notu: Hazırlık, özgüveni artırır.', 'Afiş notu: Hikâye kurmak bilgiyi akılda tutar.']
+      },
+      garden: {
+        mode: 'friendshipGarden',
+        intro: 'Dostluk Bahçesinde mektup ağaçları ve buluşma köşeleri var.',
+        instructions: 'Çiçeklere ve mektup ağaçlarına dokun.',
+        actionLabel: 'Görevlere git',
+        ambient: 'birds',
+        notes: ['Bahçe notu: Yüz yüze kısa sohbetler aidiyet hissini artırır.', 'Çiçek notu: Nazik bir söz günün yönünü değiştirebilir.', 'Ağaç notu: Yardım etmek çoğu zaman iki tarafı da güçlendirir.']
+      }
+    }
+  };
+
   let appState = null;
   let encryptionKey = null;
+  let selectedWorldBuilding = 'studio';
+  let currentExperienceScene = null;
+  let ambient = { enabled: true, currentType: null, intervalId: null, audioCtx: null };
   let inactivityTimer = null;
   let toastTimer = null;
   let selectedAvatar = avatars[0];
@@ -236,6 +389,77 @@
     return personas[appState.selectedPersona] || personas.sage;
   }
 
+  function getScene(personaId = appState.selectedPersona, buildingId = selectedWorldBuilding) {
+    return worldScenes[personaId]?.[buildingId] || null;
+  }
+
+  function spotlightX(buildingId) {
+    return ({ library: '18%', studio: '50%', garden: '82%' })[buildingId] || '50%';
+  }
+
+  function setSpotlightTarget(buildingId) {
+    selectedWorldBuilding = buildingId;
+    const stage = $('#worldStage');
+    stage?.style.setProperty('--beam-x', spotlightX(buildingId));
+    $$('.world-building').forEach(button => {
+      const active = button.dataset.worldBuilding === buildingId;
+      button.classList.toggle('targeted', active);
+    });
+  }
+
+  function stopAmbient() {
+    if (ambient.intervalId) clearInterval(ambient.intervalId);
+    ambient.intervalId = null;
+    ambient.currentType = null;
+  }
+
+  function ensureAudioContext() {
+    if (!ambient.audioCtx) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx) ambient.audioCtx = new Ctx();
+    }
+    if (ambient.audioCtx?.state === 'suspended') ambient.audioCtx.resume().catch(() => {});
+  }
+
+  function chirpBird(base = 1200) {
+    if (!ambient.enabled) return;
+    ensureAudioContext();
+    const ctx = ambient.audioCtx;
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(base, now);
+    osc.frequency.exponentialRampToValueAtTime(base * 1.45, now + 0.06);
+    osc.frequency.exponentialRampToValueAtTime(base * 1.1, now + 0.11);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.04, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.16);
+  }
+
+  function startAmbient(type) {
+    stopAmbient();
+    ambient.currentType = type;
+    if (!ambient.enabled || !type) return;
+    if (type === 'birds') {
+      chirpBird(1300);
+      ambient.intervalId = setInterval(() => {
+        chirpBird(1050 + Math.random() * 500);
+        setTimeout(() => chirpBird(1450 + Math.random() * 350), 160 + Math.random() * 150);
+      }, 4200);
+    }
+  }
+
+  function updateAmbientButton() {
+    const button = $('#ambientToggle');
+    if (!button) return;
+    button.textContent = `Ses: ${ambient.enabled ? 'Açık' : 'Kapalı'}`;
+  }
+
   function xpTarget(level) {
     return 100 + (level - 1) * 35;
   }
@@ -342,6 +566,7 @@
     encryptionKey = null;
     appState = null;
     clearTimeout(inactivityTimer);
+    stopAmbient();
     document.removeEventListener('pointerdown', resetInactivityTimer);
     document.removeEventListener('keydown', resetInactivityTimer);
     $('#appShell').hidden = true;
@@ -467,6 +692,7 @@
   function renderTown() {
     refreshPersonaUnlocks();
     const selected = activePersona();
+    if (!['library', 'studio', 'garden'].includes(selectedWorldBuilding)) selectedWorldBuilding = 'studio';
     const personaGrid = $('#personaGrid');
     personaGrid.innerHTML = Object.entries(personas).map(([id, persona]) => {
       const unlocked = isPersonaUnlocked(id);
@@ -486,23 +712,30 @@
     $('#worldCharacter').textContent = appState.profile.avatar;
     $('#worldDecor').innerHTML = selected.decor.map((item, index) => `<span style="--i:${index}">${item}</span>`).join('');
     const worldBuildings = $$('.world-building');
+    const worldIds = ['library', 'studio', 'garden'];
     worldBuildings.forEach((button, index) => {
-      button.dataset.personaBuildingName = selected.buildings[index];
-      button.setAttribute('aria-label', `${selected.buildings[index]} yapısına gir`);
+      const buildingId = worldIds[index];
+      const name = selected.buildings[index];
+      button.dataset.personaBuildingName = name;
+      button.setAttribute('aria-label', `${name} yapısına gir`);
+      button.innerHTML = `<span class="world-building-label">${name}</span>`;
+      button.classList.toggle('targeted', buildingId === selectedWorldBuilding);
     });
+    setSpotlightTarget(selectedWorldBuilding);
 
     $('#townGrid').innerHTML = Object.entries(buildings).map(([id, building], index) => {
       const level = appState.town[id];
       const baseCost = 60 + level * level * 35;
       const cost = appState.selectedPersona === 'architect' ? Math.round(baseCost * .9) : baseCost;
       const affordable = appState.profile.coins >= cost;
+      const scene = getScene(appState.selectedPersona, id);
       return `<article class="town-card">
         <span class="town-level">Seviye ${level}</span>
         <div class="building-icon">${building.icon}</div>
         <h4>${selected.buildings[index]}</h4>
-        <p>${building.description}</p>
+        <p>${scene?.intro || building.description}</p>
         <p><strong>${building.effect}</strong></p>
-        <button class="secondary-button" data-upgrade-building="${id}" ${affordable ? '' : 'disabled'}>${cost} ◆ ile yükselt</button>
+        <div class="town-card-actions"><button class="secondary-button" data-open-scene="${id}">Dünyaya gir</button><button class="secondary-button" data-upgrade-building="${id}" ${affordable ? '' : 'disabled'}>${cost} ◆ ile yükselt</button></div>
       </article>`;
     }).join('');
   }
@@ -520,12 +753,15 @@
     const index = ['library', 'studio', 'garden'].indexOf(buildingId);
     const names = persona.buildings;
     const building = buildings[buildingId];
+    const scene = getScene(appState.selectedPersona, buildingId);
+    setSpotlightTarget(buildingId);
     $('#worldModalEyebrow').textContent = persona.city.toUpperCase();
     $('#worldModalTitle').textContent = names[index];
-    $('#worldModalText').textContent = `${building.description} Bu yapı seviye ${appState.town[buildingId]}. ${building.effect}.`;
+    $('#worldModalText').textContent = `${scene?.intro || building.description} Bu yapı seviye ${appState.town[buildingId]}. ${building.effect}.`;
     $('#worldModalArt').className = `world-modal-art theme-${appState.selectedPersona} art-${buildingId}`;
-    $('#worldModalArt').innerHTML = `<span>${building.icon}</span><strong>${names[index]}</strong>`;
+    $('#worldModalArt').innerHTML = `<span>${building.icon}</span><strong>${names[index]}</strong><small>${scene?.instructions || ''}</small>`;
     $('#worldModalAction').dataset.modalBuilding = buildingId;
+    $('#worldModalAction').textContent = 'Bu dünyaya gir';
     $('#worldModal').hidden = false;
     document.body.classList.add('modal-open');
   }
@@ -533,6 +769,79 @@
   function closeWorldModal() {
     $('#worldModal').hidden = true;
     document.body.classList.remove('modal-open');
+  }
+
+  function renderSceneMarkup(personaId, buildingId) {
+    const scene = getScene(personaId, buildingId);
+    const avatar = appState.profile.avatar;
+    const notes = scene?.notes || [];
+    const starButtons = notes.map((note, i) => `<button class="scene-thing star-note s${i+1}" data-scene-note="${escapeHtml(note)}"><span>✦</span><small>${['Parla','İlerle','Odaklan','Devam et','Bitir'][i] || 'Not'}</small></button>`).join('');
+    const noteThings = notes.map((note, i) => `<button class="scene-thing note-card n${i+1}" data-scene-note="${escapeHtml(note)}">${i+1}</button>`).join('');
+    const gardenThings = notes.map((note, i) => `<button class="scene-thing garden-hotspot g${i+1}" data-scene-note="${escapeHtml(note)}"><span>${['🌳','🌸','🌼','🌲','🪨'][i] || '🌿'}</span></button>`).join('');
+    const commonPlayer = `<div class="scene-player">${avatar}</div>`;
+    switch (scene?.mode) {
+      case 'space':
+        return `<div class="experience-scene-inner scene-space"><div class="scene-bg"></div><div class="space-nebula nebula-a"></div><div class="space-nebula nebula-b"></div>${starButtons}<div class="astronaut-trail">🫧 🫧</div><div class="scene-player astronaut">👩‍🚀</div></div>`;
+      case 'libraryGarden':
+        return `<div class="experience-scene-inner scene-library-garden"><div class="scene-library"></div><div class="scene-lawn"></div>${gardenThings}<div class="scene-creature owl owl-a">🦉</div><div class="scene-creature owl owl-b">🦉</div><div class="scene-creature horse horse-a">🐎</div><div class="scene-creature horse horse-b">🐎</div><div class="scene-creature horse horse-c">🐎</div>${commonPlayer}</div>`;
+      case 'archive':
+        return `<div class="experience-scene-inner scene-archive"><div class="books-wall left"></div><div class="books-wall right"></div><div class="archive-floor"></div>${noteThings}<div class="scroll-glow">📜</div>${commonPlayer}</div>`;
+      case 'harbor':
+        return `<div class="experience-scene-inner scene-harbor"><div class="water-strip"></div><div class="dock"></div><div class="ship">⛵</div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">🧭</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">🧳</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🗺️</button>${commonPlayer}</div>`;
+      case 'mapTower':
+        return `<div class="experience-scene-inner scene-map-tower"><div class="tower-core"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">🗺️</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">📍</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🧭</button>${commonPlayer}</div>`;
+      case 'campValley':
+        return `<div class="experience-scene-inner scene-camp"><div class="camp-fire">🔥</div><div class="tent tent-a"></div><div class="tent tent-b"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">🏕️</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">🪵</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🌄</button>${commonPlayer}</div>`;
+      case 'designPalace':
+        return `<div class="experience-scene-inner scene-design"><div class="palace-grid"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">📐</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">📏</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🧾</button>${commonPlayer}</div>`;
+      case 'masterWorkshop':
+        return `<div class="experience-scene-inner scene-workshop"><div class="gear gear-a">⚙️</div><div class="gear gear-b">⚙️</div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">🧰</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">🪚</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🔩</button>${commonPlayer}</div>`;
+      case 'crystalSquare':
+        return `<div class="experience-scene-inner scene-crystal"><div class="crystal c1"></div><div class="crystal c2"></div><div class="crystal c3"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">💎</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">🪴</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🗿</button>${commonPlayer}</div>`;
+      case 'timeTower':
+        return `<div class="experience-scene-inner scene-time"><div class="clock-big">🕰️</div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">⏰</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">⌛</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🪶</button>${commonPlayer}</div>`;
+      case 'silentHall':
+        return `<div class="experience-scene-inner scene-silent"><div class="hall-desk desk-a"></div><div class="hall-desk desk-b"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">💡</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">📝</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">📌</button>${commonPlayer}</div>`;
+      case 'thoughtCourtyard':
+        return `<div class="experience-scene-inner scene-thought"><div class="ripple r1"></div><div class="ripple r2"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">💧</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">🪨</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🌫️</button>${commonPlayer}</div>`;
+      case 'communityHouse':
+        return `<div class="experience-scene-inner scene-community"><div class="message-wall"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">💌</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">📋</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🤲</button>${commonPlayer}</div>`;
+      case 'storyStage':
+        return `<div class="experience-scene-inner scene-stage"><div class="curtain left"></div><div class="curtain right"></div><div class="stage-light"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">🎤</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">🎭</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">🪧</button>${commonPlayer}</div>`;
+      case 'friendshipGarden':
+        return `<div class="experience-scene-inner scene-friendship"><div class="friend-tree"></div><div class="friend-bench"></div><button class="scene-thing object o1" data-scene-note="${escapeHtml(notes[0]||'')}">🌷</button><button class="scene-thing object o2" data-scene-note="${escapeHtml(notes[1]||'')}">🌼</button><button class="scene-thing object o3" data-scene-note="${escapeHtml(notes[2]||'')}">💌</button>${commonPlayer}</div>`;
+      default:
+        return `<div class="experience-scene-inner"><div class="scene-fallback">Bu dünya hazırlanıyor.</div></div>`;
+    }
+  }
+
+  function openExperienceWorld(buildingId) {
+    selectedWorldBuilding = buildingId;
+    setSpotlightTarget(buildingId);
+    const persona = activePersona();
+    const scene = getScene(appState.selectedPersona, buildingId);
+    const index = ['library', 'studio', 'garden'].indexOf(buildingId);
+    currentExperienceScene = { personaId: appState.selectedPersona, buildingId };
+    $('#experienceEyebrow').textContent = `${persona.name.toUpperCase()} · MİNİ DÜNYA`;
+    $('#experienceTitle').textContent = persona.buildings[index];
+    $('#experienceSubtitle').textContent = scene?.intro || '';
+    $('#experienceInstructions').textContent = scene?.instructions || 'Sahnedeki nesnelere dokun.';
+    $('#experienceActionButton').dataset.modalBuilding = buildingId;
+    $('#experienceActionButton').textContent = scene?.actionLabel || 'Bu alanı kullan';
+    $('#experienceScene').className = `experience-scene theme-${appState.selectedPersona} mode-${scene?.mode || 'default'}`;
+    $('#experienceScene').innerHTML = renderSceneMarkup(appState.selectedPersona, buildingId);
+    $('#experienceNote').textContent = 'Bir nesneye tıklayınca burada not görünecek.';
+    $('#experienceModal').hidden = false;
+    document.body.classList.add('modal-open');
+    updateAmbientButton();
+    startAmbient(scene?.ambient);
+  }
+
+  function closeExperienceWorld() {
+    currentExperienceScene = null;
+    $('#experienceModal').hidden = true;
+    document.body.classList.remove('modal-open');
+    stopAmbient();
   }
 
   function renderProfile() {
@@ -738,15 +1047,34 @@
       event.target.value = '';
     });
     $('#resetButton').addEventListener('click', resetData);
-    $('#enterWorldButton').addEventListener('click', () => { $('#worldStage').classList.toggle('immersive'); });
+    $('#enterWorldButton').addEventListener('click', () => openExperienceWorld(selectedWorldBuilding));
     $('#closeWorldModal').addEventListener('click', closeWorldModal);
     $('#worldModal').addEventListener('click', event => { if (event.target === $('#worldModal')) closeWorldModal(); });
     $('#worldModalAction').addEventListener('click', event => {
       const id = event.currentTarget.dataset.modalBuilding;
       closeWorldModal();
+      openExperienceWorld(id);
+    });
+    $('#closeExperienceModal').addEventListener('click', closeExperienceWorld);
+    $('#experienceModal').addEventListener('click', event => { if (event.target === $('#experienceModal')) closeExperienceWorld(); });
+    $('#experienceActionButton').addEventListener('click', event => {
+      const id = event.currentTarget.dataset.modalBuilding;
+      closeExperienceWorld();
       if (id === 'studio') setView('focus');
       else if (id === 'library') setView('skills');
       else setView('tasks');
+    });
+    $('#ambientToggle').addEventListener('click', () => {
+      ambient.enabled = !ambient.enabled;
+      updateAmbientButton();
+      const scene = currentExperienceScene ? getScene(currentExperienceScene.personaId, currentExperienceScene.buildingId) : null;
+      if (ambient.enabled) startAmbient(scene?.ambient);
+      else stopAmbient();
+    });
+
+    document.addEventListener('pointerover', event => {
+      const worldBuilding = event.target.closest('[data-world-building]');
+      if (worldBuilding) setSpotlightTarget(worldBuilding.dataset.worldBuilding);
     });
 
     document.addEventListener('click', event => {
@@ -754,6 +1082,10 @@
       if (personaButton) selectPersona(personaButton.dataset.persona);
       const worldBuilding = event.target.closest('[data-world-building]');
       if (worldBuilding) openWorldBuilding(worldBuilding.dataset.worldBuilding);
+      const openSceneButton = event.target.closest('[data-open-scene]');
+      if (openSceneButton) openExperienceWorld(openSceneButton.dataset.openScene);
+      const sceneNote = event.target.closest('[data-scene-note]');
+      if (sceneNote) $('#experienceNote').textContent = sceneNote.dataset.sceneNote;
       const completeButton = event.target.closest('[data-complete-task]');
       if (completeButton) completeTask(completeButton.dataset.completeTask);
       const deleteButton = event.target.closest('[data-delete-task]');
