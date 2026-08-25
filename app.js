@@ -30,6 +30,45 @@
     garden: { name: 'Yaşam Bahçesi', icon: '🌳', description: 'Sağlık ve sosyal yaşam adımlarının şehirdeki karşılığı.', effect: 'Denge ve enerji merkezi' }
   };
 
+
+  const personas = {
+    sage: {
+      name: 'Bilge', icon: '🧙', city: 'Bilge Şehri', theme: 'sage',
+      description: 'Bilginin taş sokaklarda ışığa dönüştüğü şehir.', bonus: 'Öğrenme görevlerinde +%10 XP',
+      requirement: state => state.skills.knowledge.level >= 1,
+      requirementText: 'Başlangıç kişiliği',
+      decor: ['📚', '✨', '🔭'], buildings: ['Büyük Arşiv', 'Yıldız Akademisi', 'Bilgelik Bahçesi']
+    },
+    explorer: {
+      name: 'Kaşif', icon: '🧭', city: 'Ufuk Limanı', theme: 'explorer',
+      description: 'Haritaların, geçitlerin ve bilinmeyen yolların şehri.', bonus: 'Yeni görevlerden +3 altın',
+      requirement: state => state.profile.level >= 3,
+      requirementText: 'Karakter seviyesi 3',
+      decor: ['⛵', '🗺️', '🏕️'], buildings: ['Keşif Limanı', 'Harita Kulesi', 'Vadi Kampı']
+    },
+    architect: {
+      name: 'Mimar', icon: '🏗️', city: 'Taş ve Işık Kenti', theme: 'architect',
+      description: 'Planların gerçek yapılara dönüştüğü üretim şehri.', bonus: 'Bina yükseltme maliyetinde %10 indirim',
+      requirement: state => Object.values(state.town).reduce((a,b)=>a+b,0) >= 6,
+      requirementText: 'Toplam şehir seviyesi 6',
+      decor: ['📐', '🧱', '⚙️'], buildings: ['Tasarım Sarayı', 'Usta Atölyesi', 'Kristal Meydan']
+    },
+    focusmaster: {
+      name: 'Odak Ustası', icon: '🎯', city: 'Sessizlik Kulesi', theme: 'focusmaster',
+      description: 'Zamanın yavaşladığı, dikkatin keskinleştiği sakin dünya.', bonus: 'Odak oturumlarında +%15 XP',
+      requirement: state => state.skills.focus.level >= 3,
+      requirementText: 'Odak Ustalığı seviye 3',
+      decor: ['⏳', '🌙', '🔔'], buildings: ['Zaman Kulesi', 'Sessiz Salon', 'Düşünce Avlusu']
+    },
+    envoy: {
+      name: 'Sosyal Elçi', icon: '🤝', city: 'Bağlar Meydanı', theme: 'envoy',
+      description: 'İnsanların buluştuğu, yardımlaşmanın şehri büyüttüğü meydan.', bonus: 'Sosyal görevlerde +%10 XP',
+      requirement: state => state.skills.social.level >= 3,
+      requirementText: 'Bağ Kurma seviye 3',
+      decor: ['🎪', '🎈', '💌'], buildings: ['Topluluk Evi', 'Hikâye Sahnesi', 'Dostluk Bahçesi']
+    }
+  };
+
   let appState = null;
   let encryptionKey = null;
   let inactivityTimer = null;
@@ -61,6 +100,8 @@
         social: { name: 'Bağ Kurma', icon: '🤝', level: 1, xp: 0, description: 'İletişim, yardımlaşma ve ortak işler.' }
       },
       town: { library: 1, studio: 1, garden: 1 },
+      selectedPersona: 'sage',
+      discoveredPersonas: ['sage'],
       activity: []
     };
   }
@@ -171,7 +212,28 @@
     appState.completedTasks ??= [];
     appState.skills ??= fallback.skills;
     appState.town ??= fallback.town;
+    appState.selectedPersona ??= 'sage';
+    appState.discoveredPersonas ??= ['sage'];
     appState.activity ??= [];
+    refreshPersonaUnlocks();
+  }
+
+  function refreshPersonaUnlocks() {
+    appState.discoveredPersonas ??= ['sage'];
+    Object.entries(personas).forEach(([id, persona]) => {
+      if (persona.requirement(appState) && !appState.discoveredPersonas.includes(id)) {
+        appState.discoveredPersonas.push(id);
+      }
+    });
+    if (!appState.discoveredPersonas.includes(appState.selectedPersona)) appState.selectedPersona = 'sage';
+  }
+
+  function isPersonaUnlocked(id) {
+    return appState.discoveredPersonas.includes(id) || personas[id].requirement(appState);
+  }
+
+  function activePersona() {
+    return personas[appState.selectedPersona] || personas.sage;
   }
 
   function xpTarget(level) {
@@ -403,19 +465,74 @@
   }
 
   function renderTown() {
-    $('#townGrid').innerHTML = Object.entries(buildings).map(([id, building]) => {
+    refreshPersonaUnlocks();
+    const selected = activePersona();
+    const personaGrid = $('#personaGrid');
+    personaGrid.innerHTML = Object.entries(personas).map(([id, persona]) => {
+      const unlocked = isPersonaUnlocked(id);
+      const active = id === appState.selectedPersona;
+      return `<button class="persona-card ${active ? 'active' : ''} ${unlocked ? '' : 'locked'}" data-persona="${id}" ${unlocked ? '' : 'disabled'}>
+        <span class="persona-icon">${persona.icon}</span>
+        <span class="persona-copy"><strong>${persona.name}</strong><small>${persona.city}</small></span>
+        <span class="persona-status">${unlocked ? (active ? 'Aktif' : 'Açık') : '🔒 ' + persona.requirementText}</span>
+      </button>`;
+    }).join('');
+
+    const stage = $('#worldStage');
+    stage.className = `world-stage theme-${appState.selectedPersona}`;
+    $('#worldTitle').textContent = selected.city;
+    $('#worldDescription').textContent = selected.description;
+    $('#worldBonus').textContent = selected.bonus;
+    $('#worldCharacter').textContent = appState.profile.avatar;
+    $('#worldDecor').innerHTML = selected.decor.map((item, index) => `<span style="--i:${index}">${item}</span>`).join('');
+    const worldBuildings = $$('.world-building');
+    worldBuildings.forEach((button, index) => {
+      button.dataset.personaBuildingName = selected.buildings[index];
+      button.setAttribute('aria-label', `${selected.buildings[index]} yapısına gir`);
+    });
+
+    $('#townGrid').innerHTML = Object.entries(buildings).map(([id, building], index) => {
       const level = appState.town[id];
-      const cost = 60 + level * level * 35;
+      const baseCost = 60 + level * level * 35;
+      const cost = appState.selectedPersona === 'architect' ? Math.round(baseCost * .9) : baseCost;
       const affordable = appState.profile.coins >= cost;
       return `<article class="town-card">
         <span class="town-level">Seviye ${level}</span>
         <div class="building-icon">${building.icon}</div>
-        <h4>${building.name}</h4>
+        <h4>${selected.buildings[index]}</h4>
         <p>${building.description}</p>
         <p><strong>${building.effect}</strong></p>
         <button class="secondary-button" data-upgrade-building="${id}" ${affordable ? '' : 'disabled'}>${cost} ◆ ile yükselt</button>
       </article>`;
     }).join('');
+  }
+
+  async function selectPersona(id) {
+    if (!personas[id] || !isPersonaUnlocked(id)) return;
+    appState.selectedPersona = id;
+    await saveState();
+    renderTown();
+    showToast(`${personas[id].city} aktif dünya oldu.`);
+  }
+
+  function openWorldBuilding(buildingId) {
+    const persona = activePersona();
+    const index = ['library', 'studio', 'garden'].indexOf(buildingId);
+    const names = persona.buildings;
+    const building = buildings[buildingId];
+    $('#worldModalEyebrow').textContent = persona.city.toUpperCase();
+    $('#worldModalTitle').textContent = names[index];
+    $('#worldModalText').textContent = `${building.description} Bu yapı seviye ${appState.town[buildingId]}. ${building.effect}.`;
+    $('#worldModalArt').className = `world-modal-art theme-${appState.selectedPersona} art-${buildingId}`;
+    $('#worldModalArt').innerHTML = `<span>${building.icon}</span><strong>${names[index]}</strong>`;
+    $('#worldModalAction').dataset.modalBuilding = buildingId;
+    $('#worldModal').hidden = false;
+    document.body.classList.add('modal-open');
+  }
+
+  function closeWorldModal() {
+    $('#worldModal').hidden = true;
+    document.body.classList.remove('modal-open');
   }
 
   function renderProfile() {
@@ -436,6 +553,7 @@
     appState.completedTasks.unshift({ ...task, completedAt: new Date().toISOString(), rewardXp: reward.xp, rewardCoins: reward.coins });
     appState.completedTasks = appState.completedTasks.slice(0, 50);
     addActivity('task', reward.xp, task.title);
+    refreshPersonaUnlocks();
     await saveState();
     renderAll();
     showToast(`Görev tamamlandı: +${reward.xp} XP, +${reward.coins} altın.`);
@@ -526,6 +644,7 @@
     addSkillXp('focus', xp);
     const activity = { id: crypto.randomUUID?.() || String(Date.now()), type: 'focus', points: xp, minutes, detail: `${minutes} dakikalık odak oturumu`, date: new Date().toISOString() };
     appState.activity.unshift(activity);
+    refreshPersonaUnlocks();
     await saveState();
     renderAll();
     showToast(`Odak oturumu tamamlandı: +${xp} XP, +${coins} altın.`);
@@ -533,12 +652,14 @@
 
   async function upgradeBuilding(buildingId) {
     const level = appState.town[buildingId];
-    const cost = 60 + level * level * 35;
+    const baseCost = 60 + level * level * 35;
+    const cost = appState.selectedPersona === 'architect' ? Math.round(baseCost * .9) : baseCost;
     if (appState.profile.coins < cost) return;
     appState.profile.coins -= cost;
     appState.town[buildingId] += 1;
     addProfileXp(15);
     addActivity('town', 15, `${buildings[buildingId].name} yükseltildi`);
+    refreshPersonaUnlocks();
     await saveState();
     renderAll();
     showToast(`${buildings[buildingId].name} seviye ${appState.town[buildingId]} oldu.`);
@@ -617,8 +738,22 @@
       event.target.value = '';
     });
     $('#resetButton').addEventListener('click', resetData);
+    $('#enterWorldButton').addEventListener('click', () => { $('#worldStage').classList.toggle('immersive'); });
+    $('#closeWorldModal').addEventListener('click', closeWorldModal);
+    $('#worldModal').addEventListener('click', event => { if (event.target === $('#worldModal')) closeWorldModal(); });
+    $('#worldModalAction').addEventListener('click', event => {
+      const id = event.currentTarget.dataset.modalBuilding;
+      closeWorldModal();
+      if (id === 'studio') setView('focus');
+      else if (id === 'library') setView('skills');
+      else setView('tasks');
+    });
 
     document.addEventListener('click', event => {
+      const personaButton = event.target.closest('[data-persona]');
+      if (personaButton) selectPersona(personaButton.dataset.persona);
+      const worldBuilding = event.target.closest('[data-world-building]');
+      if (worldBuilding) openWorldBuilding(worldBuilding.dataset.worldBuilding);
       const completeButton = event.target.closest('[data-complete-task]');
       if (completeButton) completeTask(completeButton.dataset.completeTask);
       const deleteButton = event.target.closest('[data-delete-task]');

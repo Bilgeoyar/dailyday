@@ -198,8 +198,42 @@
 
         <section id="view-town" class="view">
           <div class="section-intro">
-            <div><p class="eyebrow">LIFETOWN</p><h3>Kişisel şehrini kur</h3></div>
-            <p>Görevlerden kazandığın altınla yapıları yükselt.</p>
+            <div><p class="eyebrow">LIFETOWN WORLDS</p><h3>Kişilik dünyalarını aç</h3></div>
+            <p>Becerilerin geliştikçe yeni kişilikler ve onlara ait şehirler açılır.</p>
+          </div>
+
+          <div id="personaGrid" class="persona-grid"></div>
+
+          <section id="worldStage" class="world-stage" aria-live="polite">
+            <div class="world-sky">
+              <div class="world-sun"></div>
+              <div class="cloud cloud-one"></div>
+              <div class="cloud cloud-two"></div>
+              <div class="world-mountains"></div>
+              <div class="world-ground"></div>
+              <div id="worldDecor" class="world-decor"></div>
+              <button class="world-building building-left" data-world-building="library" aria-label="Sol yapıya gir"></button>
+              <button class="world-building building-center" data-world-building="studio" aria-label="Merkez yapıya gir"></button>
+              <button class="world-building building-right" data-world-building="garden" aria-label="Sağ yapıya gir"></button>
+              <div id="worldCharacter" class="world-character">🧭</div>
+              <div class="world-path"></div>
+            </div>
+            <div class="world-hud">
+              <div>
+                <p class="eyebrow light">AKTİF DÜNYA</p>
+                <h3 id="worldTitle">Bilge Şehri</h3>
+                <p id="worldDescription">Bilginin taş sokaklarda ışığa dönüştüğü şehir.</p>
+              </div>
+              <div class="world-hud-actions">
+                <span id="worldBonus" class="world-bonus">Öğrenme görevlerinde +%10 XP</span>
+                <button id="enterWorldButton" class="light-button">Dünyaya gir</button>
+              </div>
+            </div>
+          </section>
+
+          <div class="section-intro town-buildings-title">
+            <div><p class="eyebrow">ŞEHİR YAPILARI</p><h3>Yapıları geliştir</h3></div>
+            <p>Şehir sahnesindeki yapılara da tıklayabilirsin.</p>
           </div>
           <div id="townGrid" class="town-grid"></div>
         </section>
@@ -237,6 +271,19 @@
         </section>
       </div>
     </section>
+  </div>
+
+  <div id="worldModal" class="world-modal" hidden>
+    <div class="world-modal-card" role="dialog" aria-modal="true" aria-labelledby="worldModalTitle">
+      <button id="closeWorldModal" class="world-modal-close" aria-label="Kapat">×</button>
+      <div id="worldModalArt" class="world-modal-art"></div>
+      <div class="world-modal-content">
+        <p id="worldModalEyebrow" class="eyebrow">DÜNYA YAPISI</p>
+        <h3 id="worldModalTitle">Bilgelik Kütüphanesi</h3>
+        <p id="worldModalText" class="muted"></p>
+        <button id="worldModalAction" class="primary-button">Bu yapıyı kullan</button>
+      </div>
+    </div>
   </div>
 
   <noscript>Bu uygulama JavaScript gerektirir.</noscript>
